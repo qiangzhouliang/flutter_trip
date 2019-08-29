@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home_dao.dart';
 import 'package:flutter_trip/model/home_model.dart';
+import 'package:flutter_trip/widget/grid_nav.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
 /**
@@ -112,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                         pagination: SwiperPagination(),
                       ),
                     ),
+                    GridNav(gridNavModel: null,name: 'xiaoming',),
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView
