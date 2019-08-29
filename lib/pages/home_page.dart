@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home_dao.dart';
+import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
+import 'package:flutter_trip/widget/local_nav.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
 /**
@@ -28,6 +30,8 @@ class _HomePageState extends State<HomePage> {
   double appBarAlpha = 0;
   //保存从后端请求的结果
   String resultString = "";
+  //保存获取到的数据
+  List<CommonModel> localNavList = [];
 
   @override
   void initState() {
@@ -49,30 +53,20 @@ class _HomePageState extends State<HomePage> {
     });
   }
   loadData() async {
-    /*HomeDao.fetch().then((result){
-      setState(() {
-        resultString = json.encode(result);
-      });
-    }).catchError((error){
-      setState(() {
-        resultString = json.encode(error);
-      });
-    });*/
     try {
       HomeModel model = await HomeDao.fetch();
       setState(() {
-        resultString = json.encode(model.config);
+        localNavList = model.localNavList;
       });
     } catch (e){
-      setState(() {
-        resultString = json.encode(e);
-      });
+      print("err:$e");
     }
   }
   @override
   Widget build(BuildContext context) {
     //Scaffold 实现了基本的 Material Design 布局结构
     return Scaffold(
+      backgroundColor: Color(0xfff2f2f2),
       //Stack 层叠组件，前面的元素在上面，后面的元素在下面
       body: Stack(
         children: <Widget>[
@@ -113,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         pagination: SwiperPagination(),
                       ),
                     ),
-                    GridNav(gridNavModel: null,name: 'xiaoming',),
+                    Padding(padding: EdgeInsets.fromLTRB(7, 4, 7, 4),child: LocalNav(localNavList: localNavList),),
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView
