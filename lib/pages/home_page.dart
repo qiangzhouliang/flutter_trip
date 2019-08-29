@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -15,9 +14,7 @@ import 'package:flutter_trip/widget/sub_nav.dart';
 import 'package:flutter_trip/widget/webview.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
-/**
- * 首页界面
- */
+///首页界面
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -106,80 +103,91 @@ class _HomePageState extends State<HomePage> {
                       _onScroll(scrollNotification.metrics.pixels);
                     }
                   },
-                  child: ListView(
-                    children: <Widget>[
-                      //轮播图
-                      //是一个结合了绘制（painting）、定位（positioning）以及尺寸（sizing）widget的widget。
-                      Container(
-                        height: 160,
-                        //Swiper 轮播图组件
-                        child: Swiper(
-                          itemCount: bannerList.length, // 条目个数
-                          autoplay: true, //自动播放
-                          itemBuilder: (BuildContext context,index){
-                            //返回一个图片
-                            return GestureDetector(
-                              onTap: (){
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) =>
-                                        WebView(
-                                            url: bannerList[index].url,
-                                            statusBarColor: bannerList[index].statusBarColor,
-                                            title: bannerList[index].title,
-                                            hideAppBar: bannerList[index].hideAppBar
-                                        )
-                                    )
-                                );
-                              },
-                              child: Image.network(
-                                bannerList[index].icon,
-                                fit: BoxFit.fill,//适配方式，填充父窗体
-                              ),
-                            );
-                          },
-                          //添加指示器
-                          pagination: SwiperPagination(),
-                        ),
-                      ),
-                      //首页导航区
-                      Padding(padding: EdgeInsets.fromLTRB(7, 4, 7, 4),child: LocalNav(localNavList: localNavList),),
-                      //卡片内容区
-                      Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: GridNav(gridNavModel: gridNavModel),),
-
-                      //活动入口
-                      Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SubNav(subNavList: subNavList),),
-                      //获取更多和卡片内容
-                      Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SalesBox(salesBox: salesBox),),
-                      Container(
-                        height: 800,
-                        //ListTile 通常用于在 Flutter 中填充 ListView
-                        child: ListTile(title: Text("resultString"),),
-                      )
-                    ],
-                  ),
+                  child: _listView,
                 ),
                 )
             ),
-            //导航栏 Opacity包裹，可以改变组件透明度
-            Opacity(
-              //必传参数
-              opacity: appBarAlpha,
-              child: Container(
-                height: 80,
-                //decoration 装饰器, 背景色为白色
-                decoration: BoxDecoration(color: Colors.white,),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text('首页'),
-                  ),
-                ),
-              ),
-            )
+            //导航条
+            _appBar,
           ],
         ),
 
       )
     );
+  }
+
+  //提取 listview
+  Widget get _listView{
+    return ListView(
+      children: <Widget>[
+        //轮播图
+        _banner,
+        //首页导航区
+        Padding(padding: EdgeInsets.fromLTRB(7, 4, 7, 4),child: LocalNav(localNavList: localNavList),),
+        //卡片内容区
+        Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: GridNav(gridNavModel: gridNavModel),),
+
+        //活动入口
+        Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SubNav(subNavList: subNavList),),
+        //获取更多和卡片内容
+        Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SalesBox(salesBox: salesBox),)
+      ],
+    );
+  }
+
+  Widget get _appBar{
+    //导航栏 Opacity包裹，可以改变组件透明度
+    return Opacity(
+        //必传参数
+        opacity: appBarAlpha,
+        child: Container(
+          height: 80,
+          //decoration 装饰器, 背景色为白色
+          decoration: BoxDecoration(color: Colors.white,),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text('首页'),
+            ),
+          ),
+        ),
+      );
+  }
+
+  //轮播图
+  Widget get _banner {
+    return //轮播图
+      //是一个结合了绘制（painting）、定位（positioning）以及尺寸（sizing）widget的widget。
+      Container(
+        height: 160,
+        //Swiper 轮播图组件
+        child: Swiper(
+          itemCount: bannerList.length, // 条目个数
+          autoplay: true, //自动播放
+          itemBuilder: (BuildContext context,index){
+            //返回一个图片
+            return GestureDetector(
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>
+                        WebView(
+                            url: bannerList[index].url,
+                            statusBarColor: bannerList[index].statusBarColor,
+                            title: bannerList[index].title,
+                            hideAppBar: bannerList[index].hideAppBar
+                        )
+                    )
+                );
+              },
+              child: Image.network(
+                bannerList[index].icon,
+                fit: BoxFit.fill,//适配方式，填充父窗体
+              ),
+            );
+          },
+          //添加指示器
+          pagination: SwiperPagination(),
+        ),
+      );
   }
 }
