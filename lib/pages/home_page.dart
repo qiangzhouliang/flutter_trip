@@ -9,6 +9,7 @@ import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
+import 'package:flutter_trip/widget/sub_nav.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
 /**
@@ -29,10 +30,11 @@ class _HomePageState extends State<HomePage> {
   ];
   //appbar透明度
   double appBarAlpha = 0;
-  //保存从后端请求的结果
-  String resultString = "";
   //保存获取到的数据
   List<CommonModel> localNavList = [];
+  //活动集合
+  List<CommonModel> subNavList = [];
+  //卡片布局
   GridNavModel gridNavModel;
 
   @override
@@ -60,6 +62,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
+        subNavList = model.subNavList;
       });
     } catch (e){
       print("err:$e");
@@ -115,10 +118,12 @@ class _HomePageState extends State<HomePage> {
                     //卡片内容区
                     Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: GridNav(gridNavModel: gridNavModel),),
 
+                    //活动入口
+                    Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SubNav(subNavList: subNavList),),
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView
-                      child: ListTile(title: Text(resultString),),
+                      child: ListTile(title: Text("resultString"),),
                     )
                   ],
                 ),
