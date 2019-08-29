@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/widget/search_bar.dart';
-
+const TYPES = [
+  'channelgroup',
+  'gs',
+  'plane',
+  'train',
+  'cruise',
+  'district',
+  'food',
+  'hotel',
+  'huodong',
+  'shop',
+  'sight',
+  'ticket',
+  'travelgroup'
+];
+const URL =
+    'https://m.ctrip.com/restapi/h5api/searchapp/search?source=mobileweb&action=autocomplete&contentType=json&keyword=';
 /// 搜索页面
 class SearchPage extends StatefulWidget {
+  final bool hideLeft;
+  final String searchUrl;
+  final String keyword;
+  final String hint;
+
+  const SearchPage(
+      {Key key, this.hideLeft, this.searchUrl = URL, this.keyword, this.hint})
+      : super(key: key);
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -15,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: <Widget>[
           //搜索框
-          SearchBar(hideLeft: true,defaultText: '哈哈',hint: '123',leftButtonClick: () {
+          SearchBar(hideLeft: true,defaultText: '哈哈',hint: widget.hint,leftButtonClick: () {
             Navigator.pop(context);
           },onChanged: _onTextChange,)
         ],

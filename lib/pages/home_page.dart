@@ -6,6 +6,8 @@ import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
+import 'package:flutter_trip/pages/search_page.dart';
+import 'package:flutter_trip/util/navigator_util.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
@@ -210,11 +212,15 @@ class _HomePageState extends State<HomePage> {
 
   //跳转到搜索页面
   _jumpToSearch(){
-
+    NavigatorUtil.push(
+        context,
+        SearchPage(
+          hint: SEARCH_BAR_DEFAULT_TEXT,
+        ));
   }
 
   //跳转到语音页面
   _jumpToSpeak(){
-
+//    NavigatorUtil.push(context, SpeakPage());
   }
 }
