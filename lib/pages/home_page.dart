@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/dao/home_dao.dart';
 import 'package:flutter_trip/model/common_model.dart';
+import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
@@ -32,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   String resultString = "";
   //保存获取到的数据
   List<CommonModel> localNavList = [];
+  GridNavModel gridNavModel;
 
   @override
   void initState() {
@@ -57,6 +59,7 @@ class _HomePageState extends State<HomePage> {
       HomeModel model = await HomeDao.fetch();
       setState(() {
         localNavList = model.localNavList;
+        gridNavModel = model.gridNav;
       });
     } catch (e){
       print("err:$e");
@@ -107,7 +110,11 @@ class _HomePageState extends State<HomePage> {
                         pagination: SwiperPagination(),
                       ),
                     ),
+                    //首页导航区
                     Padding(padding: EdgeInsets.fromLTRB(7, 4, 7, 4),child: LocalNav(localNavList: localNavList),),
+                    //卡片内容区
+                    Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: GridNav(gridNavModel: gridNavModel),),
+
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView

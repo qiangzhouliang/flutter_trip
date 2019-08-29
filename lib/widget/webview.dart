@@ -70,12 +70,12 @@ class _WebViewState extends State<WebView> {
   }
   @override
   void dispose() {
-    super.dispose();
     //取消注册监听
     _onUrlChanged.cancel();
     _onStateChange.cancel();
     _onHttpError.cancel();
     webviewReference.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
