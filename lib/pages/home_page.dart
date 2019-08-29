@@ -144,6 +144,7 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
+            //添加背景渐变效果
             gradient: LinearGradient(
               //AppBar渐变遮罩背景
               colors: [Color(0x66000000), Colors.transparent],
@@ -152,8 +153,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           child: Container(
+            //设置上边距
             padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
             height: 80.0,
+            //设置背景颜色
             decoration: BoxDecoration(color: Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255),),
             child: SearchBar(
               searchBarType: appBarAlpha > 0.2
@@ -169,8 +172,10 @@ class _HomePageState extends State<HomePage> {
         //底部阴影
         Container(
           height: appBarAlpha > 0.2 ? 0.5 : 0,
-          decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]))],
-        );
+          decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)])
+        )
+      ],
+    );
   }
 
   //轮播图
