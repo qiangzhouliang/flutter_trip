@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/model/common_model.dart';
+import 'package:flutter_trip/widget/webview.dart';
 // 1 无状态的组件，只是展示，没有交互
 class LocalNav extends StatelessWidget {
   final List<CommonModel> localNavList;
@@ -38,17 +39,26 @@ class LocalNav extends StatelessWidget {
     );
   }
   //每一个条目的内容
-  Widget _item(BuildContext context,CommonModel commonModel){
+  Widget _item(BuildContext context,CommonModel model){
     //GestureDetector 手势检测
     return GestureDetector(
       //点击事件
       onTap: (){
-
+        Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>
+            WebView(
+              url: model.url,
+              statusBarColor: model.statusBarColor,
+              title: model.title,
+              hideAppBar: model.hideAppBar
+            )
+          )
+        );
       },
       child: Column(
         children: <Widget>[
-          Image.network(commonModel.icon,width: 32,height: 32,),
-          Text(commonModel.title,style: TextStyle(fontSize: 12),)
+          Image.network(model.icon,width: 32,height: 32,),
+          Text(model.title,style: TextStyle(fontSize: 12),)
         ],
       ),
     );
