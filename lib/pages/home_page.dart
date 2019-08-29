@@ -7,8 +7,10 @@ import 'package:flutter_trip/dao/home_dao.dart';
 import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
+import 'package:flutter_trip/model/sales_box_model.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
+import 'package:flutter_trip/widget/sales_box.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
@@ -36,6 +38,8 @@ class _HomePageState extends State<HomePage> {
   List<CommonModel> subNavList = [];
   //卡片布局
   GridNavModel gridNavModel;
+  //获取更多内容
+  SalesBoxModel salesBox;
 
   @override
   void initState() {
@@ -63,6 +67,7 @@ class _HomePageState extends State<HomePage> {
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
         subNavList = model.subNavList;
+        salesBox = model.salesBox;
       });
     } catch (e){
       print("err:$e");
@@ -120,6 +125,8 @@ class _HomePageState extends State<HomePage> {
 
                     //活动入口
                     Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SubNav(subNavList: subNavList),),
+                    //获取更多和卡片内容
+                    Padding(padding: EdgeInsets.fromLTRB(7, 0, 7, 4),child: SalesBox(salesBox: salesBox),),
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView
