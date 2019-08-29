@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_trip/dao/home_dao.dart';
+import 'package:flutter_trip/model/home_model.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
 /**
@@ -21,6 +25,14 @@ class _HomePageState extends State<HomePage> {
   ];
   //appbar透明度
   double appBarAlpha = 0;
+  //保存从后端请求的结果
+  String resultString = "";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
   //滚动处理操作
   _onScroll(offset){
     double alpha = offset / APPBAR_SCROLL_OFFSET;
@@ -34,6 +46,27 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       appBarAlpha = alpha;
     });
+  }
+  loadData() async {
+    /*HomeDao.fetch().then((result){
+      setState(() {
+        resultString = json.encode(result);
+      });
+    }).catchError((error){
+      setState(() {
+        resultString = json.encode(error);
+      });
+    });*/
+    try {
+      HomeModel model = await HomeDao.fetch();
+      setState(() {
+        resultString = json.encode(model.config);
+      });
+    } catch (e){
+      setState(() {
+        resultString = json.encode(e);
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -82,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       height: 800,
                       //ListTile 通常用于在 Flutter 中填充 ListView
-                      child: ListTile(title: Text('哈哈'),),
+                      child: ListTile(title: Text(resultString),),
                     )
                   ],
                 ),
