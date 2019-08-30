@@ -39,7 +39,7 @@ class _TabNavigatorState extends State<TabNavigator> {
           //首页
           HomePage(),
           //搜索
-          SearchPage(),
+          SearchPage(hideLeft: true,),
           //旅拍
           TravelPage(),
           // 我的

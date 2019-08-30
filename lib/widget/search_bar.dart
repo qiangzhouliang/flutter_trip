@@ -93,7 +93,7 @@ class _SearchBarState extends State<SearchBar> {
                 child: Row(
                   children: <Widget>[
                     //左边
-                    Text('上海',style: TextStyle(color: _homeFontColor(), fontSize: 14),),
+                    Text('上海',style: TextStyle(color: _homeFontColor(), fontSize: 12),),
                     //右边图片
                     Icon(Icons.expand_more,color: _homeFontColor(),size: 22,)
                   ],
@@ -142,13 +142,13 @@ class _SearchBarState extends State<SearchBar> {
                       controller: _controller,
                       onChanged: _onChanged,
                       autofocus: true,
-                      style: TextStyle(fontSize: 18.0,color: Colors.black,fontWeight: FontWeight.w300),
+                      style: TextStyle(fontSize: 14.0,color: Colors.black,fontWeight: FontWeight.w300),
                       //输入文本的样式
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                         border: InputBorder.none,
                         hintText: widget.hint ?? '',
-                        hintStyle: TextStyle(fontSize: 15),
+                        hintStyle: TextStyle(fontSize: 12),
                       ))
                   : _wrapTap(
                       Container(
