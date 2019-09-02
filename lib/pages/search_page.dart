@@ -133,6 +133,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+  //根据类型获取图片地址
   _typeImage(String type) {
     if (type == null) return 'images/type_travelgroup.png';
     String path = 'travelgroup';
@@ -145,6 +146,7 @@ class _SearchPageState extends State<SearchPage> {
     return 'images/type_$path.png';
   }
 
+  //内容标题
   _title(SearchItem item) {
     if (item == null) {
       return null;
@@ -158,6 +160,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _subTitle(SearchItem item) {
+    //RichText 段落
     return RichText(
       text: TextSpan(children: <TextSpan>[
         TextSpan(
@@ -172,22 +175,24 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  //对搜索关键字高亮显示
   _keywordTextSpans(String word, String keyword) {
     List<TextSpan> spans = [];
     if (word == null || word.length == 0) return spans;
     //搜索关键字高亮忽略大小写
     String wordL = word.toLowerCase(), keywordL = keyword.toLowerCase();
     List<String> arr = wordL.split(keywordL);
-    TextStyle normalStyle = TextStyle(fontSize: 16, color: Colors.black87);
-    TextStyle keywordStyle = TextStyle(fontSize: 16, color: Colors.orange);
+    //非高亮
+    TextStyle normalStyle = TextStyle(fontSize: 14, color: Colors.black87);
+    //高亮
+    TextStyle keywordStyle = TextStyle(fontSize: 14, color: Colors.orange);
     //'wordwoc'.split('w') -> [, ord, oc] @https://www.tutorialspoint.com/tpcg.php?p=wcpcUA
     int preIndex = 0;
     for (int i = 0; i < arr.length; i++) {
       if ((i + 1) % 2 == 0) {
         //搜索关键字高亮忽略大小写
         preIndex = wordL.indexOf(keywordL, preIndex);
-        spans.add(TextSpan(
-            text: word.substring(preIndex, preIndex + 1), style: keywordStyle));
+        spans.add(TextSpan(text: word.substring(preIndex, preIndex + 1), style: keywordStyle));
       }
       String val = arr[i];
       if (val != null && val.length > 0) {
