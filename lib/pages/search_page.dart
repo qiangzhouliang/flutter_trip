@@ -160,7 +160,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _subTitle(SearchItem item) {
-    //RichText 段落
+    //RichText 富文本，可以实现内容不同样式的展示
     return RichText(
       text: TextSpan(children: <TextSpan>[
         TextSpan(
