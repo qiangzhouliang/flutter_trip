@@ -11,3 +11,7 @@
 - 5 decoration 装饰器, 背景色为白色
 # 4 search分支
 主要存的是搜索相关的内容
+# 4 speak分支
+百度AI智能语音的集成
+包含了Android端集成和iOS端集成，Android端asr_plugin的创建，配置，集成和注册，
+以及Android端flutter的依赖引入和解决依赖冲突的配置
