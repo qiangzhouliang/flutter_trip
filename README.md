@@ -15,3 +15,5 @@
 百度AI智能语音的集成
 包含了Android端集成和iOS端集成，Android端asr_plugin的创建，配置，集成和注册，
 以及Android端flutter的依赖引入和解决依赖冲突的配置
+# 5 travel 分支
+实现了旅拍模块

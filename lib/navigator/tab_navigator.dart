@@ -29,11 +29,13 @@ class _TabNavigatorState extends State<TabNavigator> {
     return Scaffold(
       body: PageView(
         controller: _controller,
-        onPageChanged: (index){
+        /*onPageChanged: (index){
           setState(() {
             _currentIndex = index;
           });
-        },
+        },*/
+        //禁止滑动
+        physics: NeverScrollableScrollPhysics(),
         // 这个里面就是要显示的界面
         children: <Widget>[
           //首页
