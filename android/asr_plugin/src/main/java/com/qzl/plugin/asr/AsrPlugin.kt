@@ -37,15 +37,15 @@ class AsrPlugin(registrar: PluginRegistry.Registrar) : MethodChannel.MethodCallH
 
         }
 
-        override fun onAsrPartialResult(results: Array<String>, recogResult: RecogResult) {
+        override fun onAsrPartialResult(results: ArrayList<String>, recogResult: RecogResult) {
 
         }
 
-        override fun onAsrOnlineNluResult(nluResult: String) {
+        override fun onAsrOnlineNluResult(nluResult: String?) {
 
         }
         //最终的返回结果
-        override fun onAsrFinalResult(results: Array<String>, recogResult: RecogResult) {
+        override fun onAsrFinalResult(results: ArrayList<String>, recogResult: RecogResult) {
             if (resultStateful != null) {
                 resultStateful?.success(results[0])
             }

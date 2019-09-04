@@ -15,7 +15,7 @@ import org.json.JSONObject
 class RecogEventAdapter(private val listener: OnAsrListener) : EventListener {
 
     // 基于DEMO集成3.1 开始回调事件
-    override fun onEvent(name: String, params: String, data: ByteArray, offset: Int, length: Int) {
+    override fun onEvent(name: String?, params: String?, data: ByteArray?, offset: Int, length: Int) {
         val currentJson = params
         val logMessage = "name:$name; params:$params"
 
@@ -48,7 +48,7 @@ class RecogEventAdapter(private val listener: OnAsrListener) : EventListener {
             } else if (recogResult.isPartialResult) {
                 results?.let { listener.onAsrPartialResult(it, recogResult) }
             } else if (recogResult.isNluResult) {
-                listener.onAsrOnlineNluResult(String(data, offset, length))
+                listener.onAsrOnlineNluResult(data?.let { String(it, offset, length) })
             }
 
         } else if (name == SpeechConstant.CALLBACK_EVENT_ASR_FINISH) {
@@ -71,14 +71,14 @@ class RecogEventAdapter(private val listener: OnAsrListener) : EventListener {
             val vol = parseVolumeJson(params)
             listener.onAsrVolume(vol.volumePercent, vol.volume)
         } else if (name == SpeechConstant.CALLBACK_EVENT_ASR_AUDIO) {
-            if (data.size != length) {
+            if (data?.size != length) {
                 Log.e(TAG, "internal error: asr.audio callback data length is not equal to length param")
             }
-            listener.onAsrAudio(data, offset, length)
+            data?.let { listener.onAsrAudio(it, offset, length) }
         }
     }
 
-    private fun parseVolumeJson(jsonStr: String): Volume {
+    private fun parseVolumeJson(jsonStr: String?): Volume {
         val vol = Volume()
         vol.origalJson = jsonStr
         try {

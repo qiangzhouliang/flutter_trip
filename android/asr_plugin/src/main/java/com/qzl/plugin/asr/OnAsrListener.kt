@@ -31,7 +31,7 @@ interface OnAsrListener {
      * @param results     可能返回多个结果，请取第一个结果
      * @param recogResult 完整的结果
      */
-    fun onAsrPartialResult(results: Array<String>, recogResult: RecogResult)
+    fun onAsrPartialResult(results: ArrayList<String>, recogResult: RecogResult)
 
     /**
      * 语音的在线语义结果
@@ -39,7 +39,7 @@ interface OnAsrListener {
      * CALLBACK_EVENT_ASR_PARTIAL resultType=nlu_result
      * @param nluResult
      */
-    fun onAsrOnlineNluResult(nluResult: String)
+    fun onAsrOnlineNluResult(nluResult: String?)
 
     /**
      * CALLBACK_EVENT_ASR_PARTIAL resultType=final_result
@@ -48,7 +48,7 @@ interface OnAsrListener {
      * @param results     可能返回多个结果，请取第一个结果
      * @param recogResult 完整的结果
      */
-    fun onAsrFinalResult(results: Array<String>, recogResult: RecogResult)
+    fun onAsrFinalResult(results: ArrayList<String>, recogResult: RecogResult)
 
     /**
      * CALLBACK_EVENT_ASR_FINISH

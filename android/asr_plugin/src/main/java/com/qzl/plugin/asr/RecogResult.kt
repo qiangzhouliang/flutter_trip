@@ -1,6 +1,5 @@
 package com.qzl.plugin.asr
 
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -10,7 +9,7 @@ import org.json.JSONObject
 class RecogResult {
 
     var origalJson: String? = null
-    var resultsRecognition: Array<String>? = null
+    var resultsRecognition: ArrayList<String>? = null
     var origalResult: String? = null
     var sn: String? = null // 日志id， 请求有问题请提问带上sn
     var desc: String? = null
@@ -35,7 +34,7 @@ class RecogResult {
     companion object {
         private val ERROR_NONE = 0
 
-        fun parseJson(jsonStr: String): RecogResult {
+        fun parseJson(jsonStr: String?): RecogResult {
             val result = RecogResult()
             result.origalJson = jsonStr
             try {
@@ -51,9 +50,9 @@ class RecogResult {
                     val arr = json.optJSONArray("results_recognition")
                     if (arr != null) {
                         val size = arr.length()
-                        val recogs = arrayOfNulls<String>(size)
+                        val recogs = ArrayList<String>()
                         for (i in 0 until size) {
-                            recogs[i] = arr.getString(i)
+                            recogs.add(arr.getString(i))
                         }
                         result.resultsRecognition = recogs
                     }

@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-/// dart端的实现
+/// 自定义插件 dart端的实现
 class AsrManager {
   //和插件建立联系
   static const MethodChannel _channel = const MethodChannel('asr_plugin');
