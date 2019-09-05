@@ -17,3 +17,5 @@
 以及Android端flutter的依赖引入和解决依赖冲突的配置
 # 5 travel 分支
 实现了旅拍模块
+# 6 splash分支 
+解决启动白屏问题
