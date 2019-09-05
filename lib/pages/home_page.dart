@@ -202,16 +202,12 @@ class _HomePageState extends State<HomePage> {
             //返回一个图片
             return GestureDetector(
               onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>
-                        WebView(
-                            url: bannerList[index].url,
-                            statusBarColor: bannerList[index].statusBarColor,
-                            title: bannerList[index].title,
-                            hideAppBar: bannerList[index].hideAppBar
-                        )
-                    )
-                );
+                NavigatorUtil.push(context, WebView(
+                    url: bannerList[index].url,
+                    statusBarColor: bannerList[index].statusBarColor,
+                    title: bannerList[index].title,
+                    hideAppBar: bannerList[index].hideAppBar
+                ));
               },
               child: Image.network(
                 bannerList[index].icon,

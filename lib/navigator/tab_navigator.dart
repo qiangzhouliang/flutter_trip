@@ -25,11 +25,6 @@ class _TabNavigatorState extends State<TabNavigator> {
     return Scaffold(
       body: PageView(
         controller: _controller,
-        /*onPageChanged: (index){
-          setState(() {
-            _currentIndex = index;
-          });
-        },*/
         //禁止滑动
         physics: NeverScrollableScrollPhysics(),
         // 这个里面就是要显示的界面
@@ -59,28 +54,18 @@ class _TabNavigatorState extends State<TabNavigator> {
         //将label固定，无论选中不选择，让字体都显示出来
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,color: _defaultColor,),
-            activeIcon: Icon(Icons.home,color: _activeColor,),
-            title: Text('首页',style: TextStyle(color:_currentIndex !=0?_defaultColor : _activeColor),)
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search,color: _defaultColor,),
-              activeIcon: Icon(Icons.search,color: _activeColor,),
-              title: Text('搜索',style: TextStyle(color:_currentIndex !=1 ? _defaultColor : _activeColor),)
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.camera_alt,color: _defaultColor,),
-              activeIcon: Icon(Icons.camera_alt,color: _activeColor,),
-              title: Text('旅拍',style: TextStyle(color:_currentIndex !=2 ? _defaultColor : _activeColor),)
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle,color: _defaultColor,),
-              activeIcon: Icon(Icons.account_circle,color: _activeColor,),
-              title: Text('我的',style: TextStyle(color:_currentIndex !=3 ? _defaultColor : _activeColor),)
-          )
+          _bottomItem('首页',Icons.home,0),_bottomItem('搜索',Icons.search,1),
+          _bottomItem('旅拍',Icons.camera_alt,2),_bottomItem('我的',Icons.account_circle,3),
         ],
       ),
+    );
+  }
+
+  _bottomItem(String title,IconData icon,int index,){
+    return BottomNavigationBarItem(
+      icon: Icon(icon,color: _defaultColor,),
+      activeIcon: Icon(icon,color: _activeColor,),
+      title: Text(title,style: TextStyle(color:_currentIndex !=index ? _defaultColor : _activeColor),)
     );
   }
 }
