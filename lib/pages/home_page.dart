@@ -6,14 +6,20 @@ import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
+import 'package:flutter_trip/pages/search_page.dart';
+import 'package:flutter_trip/pages/speak_page.dart';
+import 'package:flutter_trip/util/navigator_util.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/loading_container.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
 import 'package:flutter_trip/widget/sales_box.dart';
+import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 import 'package:flutter_trip/widget/webview.dart';
+import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 //滚动的最大值,阈值
 const APPBAR_SCROLL_OFFSET = 100;
+const SEARCH_BAR_DEFAULT_TEXT = '网红打卡地 景点 酒店 美食';
 ///首页界面
 class HomePage extends StatefulWidget {
   @override
@@ -40,6 +46,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _handleRefresh();
+    hideScreen();
+  }
+
+  ///hide your splash screen
+  Future<void> hideScreen() async {
+    Future.delayed(Duration(milliseconds: 600), () {
+      FlutterSplashScreen.hide();
+    });
   }
   //滚动处理操作
   _onScroll(offset){
@@ -136,22 +150,42 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget get _appBar{
-    //导航栏 Opacity包裹，可以改变组件透明度
-    return Opacity(
-        //必传参数
-        opacity: appBarAlpha,
-        child: Container(
-          height: 80,
-          //decoration 装饰器, 背景色为白色
-          decoration: BoxDecoration(color: Colors.white,),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: Text('首页'),
+    return Column(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            //添加背景渐变效果
+            gradient: LinearGradient(
+              //AppBar渐变遮罩背景
+              colors: [Color(0x66000000), Colors.transparent],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Container(
+            //设置上边距
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            height: 80.0,
+            //设置背景颜色
+            decoration: BoxDecoration(color: Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255),),
+            child: SearchBar(
+              searchBarType: appBarAlpha > 0.2
+                  ? SearchBarType.homeLight
+                  : SearchBarType.home,
+              inputBoxClick: _jumpToSearch,
+              speakClick: _jumpToSpeak,
+              defaultText: SEARCH_BAR_DEFAULT_TEXT,
+              leftButtonClick: () {},
             ),
           ),
         ),
-      );
+        //底部阴影
+        Container(
+          height: appBarAlpha > 0.2 ? 0.5 : 0,
+          decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)])
+        )
+      ],
+    );
   }
 
   //轮播图
@@ -168,16 +202,12 @@ class _HomePageState extends State<HomePage> {
             //返回一个图片
             return GestureDetector(
               onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>
-                        WebView(
-                            url: bannerList[index].url,
-                            statusBarColor: bannerList[index].statusBarColor,
-                            title: bannerList[index].title,
-                            hideAppBar: bannerList[index].hideAppBar
-                        )
-                    )
-                );
+                NavigatorUtil.push(context, WebView(
+                    url: bannerList[index].url,
+                    statusBarColor: bannerList[index].statusBarColor,
+                    title: bannerList[index].title,
+                    hideAppBar: bannerList[index].hideAppBar
+                ));
               },
               child: Image.network(
                 bannerList[index].icon,
@@ -189,5 +219,19 @@ class _HomePageState extends State<HomePage> {
           pagination: SwiperPagination(),
         ),
       );
+  }
+
+  //跳转到搜索页面
+  _jumpToSearch(){
+    NavigatorUtil.push(
+        context,
+        SearchPage(
+          hint: SEARCH_BAR_DEFAULT_TEXT,
+        ));
+  }
+
+  //跳转到语音页面
+  _jumpToSpeak(){
+    NavigatorUtil.push(context, SpeakPage());
   }
 }
