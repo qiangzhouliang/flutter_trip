@@ -4,16 +4,12 @@ import 'package:flutter_trip/pages/my_page.dart';
 import 'package:flutter_trip/pages/search_page.dart';
 import 'package:flutter_trip/pages/travel_page.dart';
 
-/**
- * 导航栏组件，继承自有状态的组件 StatefulWidget
- */
+/*导航栏组件，继承自有状态的组件 StatefulWidget*/
 class TabNavigator extends StatefulWidget {
   @override
   _TabNavigatorState createState() => _TabNavigatorState();
 }
-/**
- * _:可以定义为私有类，不被外界访问
- */
+/*_:可以定义为私有类，不被外界访问*/
 class _TabNavigatorState extends State<TabNavigator> {
   //选中的颜色和未选中的颜色
   final _defaultColor = Colors.grey;
